@@ -7,6 +7,9 @@ const seedData = require('./seedData');
 const request = require('supertest');
 const app = require('../lib/app');
 
+jest.mock('../lib/services/auth.js');
+jest.mock('../lib/middleware/ensureAuth.js');
+
 describe('polls routes', () => {
   beforeEach(() => {
     return seedData(100);
