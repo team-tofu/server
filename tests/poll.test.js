@@ -34,7 +34,7 @@ describe('polls routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           __v: 0,
-          email: 'newemail@email.com',
+          email: '123456@email.com',
           _id: expect.any(String),
           question: 'Hello?',
           options: ['one', 'two', 'three']
