@@ -50,6 +50,7 @@ describe('polls routes', () => {
         expect(polls).toHaveLength(100);
       });
   });
+
   it('can get a poll by id', () => {
     return request(app)
       .post('/')
@@ -67,4 +68,22 @@ describe('polls routes', () => {
           });
       });
   });
+  it('can delete a poll by id', () => {
+    return request (app)
+      .post('/')
+      .send({
+        question: 'Hello?',
+        options: ['one', 'two', 'three'],
+        email: 'newemail@email.com'
+      })
+      .then(postedPoll => {
+        return request (app)
+          .delete(`/${postedPoll.body._id}`)  
+          .then(res => {
+            expect(res.body).toEqual(postedPoll.body);
+          });
+      });
+  });
 });
+
+
