@@ -50,4 +50,21 @@ describe('polls routes', () => {
         expect(polls).toHaveLength(100);
       });
   });
+  it('can get a poll by id', () => {
+    return request(app)
+      .post('/')
+      .send({
+        question: 'Hello?',
+        options: ['one', 'two', 'three'],
+        email: 'newemail@email.com'
+      })
+      .then(postedPoll => {
+        const id = postedPoll.body._id;
+        return request(app)
+          .get(`/${id}`)
+          .then(res => {
+            expect(res.body._id).toEqual(postedPoll.body._id);
+          });
+      });
+  });
 });
