@@ -1,14 +1,14 @@
 require('dotenv').config();
-require('../lib/utils/connect')();
+require('../../lib/utils/connect')();
 
 const mongoose = require('mongoose');
-const seedData = require('./seedData');
+const seedData = require('../../tests/seedData');
 
 const request = require('supertest');
-const app = require('../lib/app');
+const app = require('../../lib/app');
 
-jest.mock('../lib/services/auth.js');
-jest.mock('../lib/middleware/ensureAuth.js');
+jest.mock('../../lib/services/auth.js');
+jest.mock('../../lib/middleware/ensureAuth.js');
 
 describe('polls routes', () => {
   beforeEach(() => {
