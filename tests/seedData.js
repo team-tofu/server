@@ -1,14 +1,29 @@
-const Poll = require('../lib/models/Poll');
 const chance = require('chance').Chance();
+const Poll = require('../lib/models/Poll');
+const Vote = require('../lib/models/Vote');
 
-function seedData(count = 100) {
-  const pollToCreate = [...Array(count)].map(() => ({
+const createPolls = totalPolls => {
+  const pollToCreate = {
     question: chance.sentence(),
     options: [chance.string(), chance.string(), chance.string()],
     email: chance.email()
-  }));
+  };
 
-  return Poll.create(pollToCreate);
-}
+  return Promise.all([...Array(totalPolls)].map(() => Poll.create(pollToCreate)));
+};
 
-module.exports = seedData;
+const createVotes = (totalPolls, totalVotes) => {
+  return createPolls(totalPolls)
+    .then(polls => {
+      const voteToCreate = {
+        poll: chance.pickone(polls)._id,
+        optionChose: chance.integer({ min: 0, max: polls.length - 1 }),
+        email: chance.pickone(polls).toJSON().email
+      };
+      
+      return Promise.all([...Array(totalVotes)].map(() => Vote.create(voteToCreate)));
+    });
+  
+};
+
+module.exports = (totalPolls = 50, totalVotes = 100) => createVotes(totalPolls, totalVotes);
