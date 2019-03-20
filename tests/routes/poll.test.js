@@ -12,9 +12,13 @@ jest.mock('../../lib/middleware/ensureAuth.js');
 
 describe('polls routes', () => {
   beforeEach(() => {
-    return seedData(100);
+    return mongoose.connection.dropDatabase();
   });
 
+  beforeEach(() => {
+    return seedData(100);
+  });
+  
   afterEach(() => {
     return mongoose.connection.dropDatabase();
   });
