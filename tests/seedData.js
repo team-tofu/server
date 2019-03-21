@@ -26,4 +26,4 @@ const createVotes = (totalPolls, totalVotes) => {
   
 };
 
-module.exports = (totalPolls = 50, totalVotes = 100) => createVotes(totalPolls, totalVotes);
+module.exports = (totalPolls = 50, totalVotes = 50) => createVotes(totalPolls, totalVotes);
